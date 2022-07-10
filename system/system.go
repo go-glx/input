@@ -11,8 +11,6 @@ import (
 	"github.com/go-glx/input/system/player"
 )
 
-type actionID string
-
 type System struct {
 	isReady bool
 
@@ -28,6 +26,12 @@ func NewSystem() *System {
 	return &System{
 		isReady: false,
 	}
+}
+
+// NewAction will create Action that can be bind to system
+// later wia BindAs function
+func (s *System) NewAction(mapID string, id string) *Action {
+	return newAction(s, actionID(id), actionMapID(mapID))
 }
 
 // Resolve will fetch actual input values for provided action
@@ -87,9 +91,10 @@ func Resolve[T data.Type](s *System, action actionID) T {
 	return *new(T)
 }
 
-// SwitchPlayer will set current player for who need
-// resolve all input keys.
-// If you have more than 1 player, you must call this
+// SwitchPlayer will set current player for who lib should
+// resolve provided input actions wia Resolve.
+//
+// If you have more than one player, you MUST call this
 // function every frame, right before Resolve
 //
 // example:

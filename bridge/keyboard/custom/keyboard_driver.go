@@ -7,10 +7,10 @@ import (
 type State uint8
 
 const (
-	StateUp          State = 0
-	StateJustPressed State = 1
-	StateDown        State = 2
-	StateReleased    State = 3
+	StateUp           State = 0
+	StateJustPressed  State = 1
+	StateDown         State = 2
+	StateJustReleased State = 3
 )
 
 type KeyboardDriver struct {
@@ -81,7 +81,7 @@ func (kb *KeyboardDriver) IsJustPressed(key keyboard.Key) bool {
 
 func (kb *KeyboardDriver) IsJustReleased(key keyboard.Key) bool {
 	if state, exist := kb.keysState[key]; exist {
-		return state == StateReleased
+		return state == StateJustReleased
 	}
 
 	return false

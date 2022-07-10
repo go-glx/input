@@ -44,6 +44,7 @@ func TestAssemble(t *testing.T) {
 	// -- players
 	player1 := player.NewPlayer()
 	player1.AttachController(controllerLeft)
+	// todo: player1.SwitchToActionMap( .. ) ??
 
 	player2 := player.NewPlayer()
 	player2.AttachController(controllerRight)
@@ -51,11 +52,14 @@ func TestAssemble(t *testing.T) {
 	// -- system
 	system := NewSystem()
 
+	// -- actions
+	movementWalk := system.NewAction(testActionMovement, testActionMovementWalk)
+
 	// -- bindings
-	DefineActionOf[data.Vec2](system, testActionMovementWalk, controllerLeft,
+	BindAs[data.Vec2](controllerLeft, movementWalk,
 		system.FromVec2Keyboard(keyboard.KeyW, keyboard.KeyS, keyboard.KeyA, keyboard.KeyD), // WASD
 	)
-	DefineActionOf[data.Vec2](system, testActionMovementWalk, controllerRight,
+	BindAs[data.Vec2](controllerRight, movementWalk,
 		system.FromVec2Keyboard(keyboard.KeyI, keyboard.KeyK, keyboard.KeyJ, keyboard.KeyL), // IJKL
 	)
 

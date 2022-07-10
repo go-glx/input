@@ -6,13 +6,17 @@ import (
 	"github.com/go-glx/input/system/internal/binding"
 )
 
-func DefineActionOf[T data.Type](s *System, action actionID, ctl *controller.Controller, binder ...binding.F[T]) {
-	for _, binder := range binder {
-		bindAction(s, action, ctl, binder)
+func BindAs[T data.Type](
+	ctl *controller.Controller,
+	action *Action,
+	binders ...binding.F[T],
+) {
+	for _, binder := range binders {
+		bind(action.system, action.ID, ctl, binder)
 	}
 }
 
-func bindAction[T data.Type](s *System, action actionID, ctl *controller.Controller, binder binding.F[T]) {
+func bind[T data.Type](s *System, action actionID, ctl *controller.Controller, binder binding.F[T]) {
 	if s.binders == nil {
 		s.binders = make(map[actionID]map[controller.ID][]binding.F[any])
 	}
