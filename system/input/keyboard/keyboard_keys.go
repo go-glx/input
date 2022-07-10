@@ -1,107 +1,107 @@
-package input
+package keyboard
 
-type KeyboardKey int32
+type Key int32
 
-const KeyUnknown KeyboardKey = 0 // 0x00 ('\0')
+const KeyUnknown Key = 0 // 0x00 ('\0')
 
 // F1-12 block
 const (
-	KeyF1  KeyboardKey = 1073741882 // 0x4000003A
-	KeyF2  KeyboardKey = 1073741883 // 0x4000003B
-	KeyF3  KeyboardKey = 1073741884 // 0x4000003C
-	KeyF4  KeyboardKey = 1073741885 // 0x4000003D
-	KeyF5  KeyboardKey = 1073741886 // 0x4000003E
-	KeyF6  KeyboardKey = 1073741887 // 0x4000003F
-	KeyF7  KeyboardKey = 1073741888 // 0x40000040
-	KeyF8  KeyboardKey = 1073741889 // 0x40000041
-	KeyF9  KeyboardKey = 1073741890 // 0x40000042
-	KeyF10 KeyboardKey = 1073741891 // 0x40000043
-	KeyF11 KeyboardKey = 1073741892 // 0x40000044
-	KeyF12 KeyboardKey = 1073741893 // 0x40000045
+	KeyF1  Key = 1073741882 // 0x4000003A
+	KeyF2  Key = 1073741883 // 0x4000003B
+	KeyF3  Key = 1073741884 // 0x4000003C
+	KeyF4  Key = 1073741885 // 0x4000003D
+	KeyF5  Key = 1073741886 // 0x4000003E
+	KeyF6  Key = 1073741887 // 0x4000003F
+	KeyF7  Key = 1073741888 // 0x40000040
+	KeyF8  Key = 1073741889 // 0x40000041
+	KeyF9  Key = 1073741890 // 0x40000042
+	KeyF10 Key = 1073741891 // 0x40000043
+	KeyF11 Key = 1073741892 // 0x40000044
+	KeyF12 Key = 1073741893 // 0x40000045
 )
 
 // numeric block (0-9, -, =)
 const (
-	Key0      KeyboardKey = 48 // 0x30 ('0')
-	Key1      KeyboardKey = 49 // 0x31 ('1')
-	Key2      KeyboardKey = 50 // 0x32 ('2')
-	Key3      KeyboardKey = 51 // 0x33 ('3')
-	Key4      KeyboardKey = 52 // 0x34 ('4')
-	Key5      KeyboardKey = 53 // 0x35 ('5')
-	Key6      KeyboardKey = 54 // 0x36 ('6')
-	Key7      KeyboardKey = 55 // 0x37 ('7')
-	Key8      KeyboardKey = 56 // 0x38 ('8')
-	Key9      KeyboardKey = 57 // 0x39 ('9')
-	KeyMinus  KeyboardKey = 45 // 0x2D ('-')
-	KeyEquals KeyboardKey = 61 // 0x3D ('=')
+	Key0      Key = 48 // 0x30 ('0')
+	Key1      Key = 49 // 0x31 ('1')
+	Key2      Key = 50 // 0x32 ('2')
+	Key3      Key = 51 // 0x33 ('3')
+	Key4      Key = 52 // 0x34 ('4')
+	Key5      Key = 53 // 0x35 ('5')
+	Key6      Key = 54 // 0x36 ('6')
+	Key7      Key = 55 // 0x37 ('7')
+	Key8      Key = 56 // 0x38 ('8')
+	Key9      Key = 57 // 0x39 ('9')
+	KeyMinus  Key = 45 // 0x2D ('-')
+	KeyEquals Key = 61 // 0x3D ('=')
 )
 
 // chars block (a-z)
 const (
-	KeyA KeyboardKey = 97  // 0x61 ('a')
-	KeyB KeyboardKey = 98  // 0x62 ('b')
-	KeyC KeyboardKey = 99  // 0x63 ('c')
-	KeyD KeyboardKey = 100 // 0x64 ('d')
-	KeyE KeyboardKey = 101 // 0x65 ('e')
-	KeyF KeyboardKey = 102 // 0x66 ('f')
-	KeyG KeyboardKey = 103 // 0x67 ('g')
-	KeyH KeyboardKey = 104 // 0x68 ('h')
-	KeyI KeyboardKey = 105 // 0x69 ('i')
-	KeyJ KeyboardKey = 106 // 0x6A ('j')
-	KeyK KeyboardKey = 107 // 0x6B ('k')
-	KeyL KeyboardKey = 108 // 0x6C ('l')
-	KeyM KeyboardKey = 109 // 0x6D ('m')
-	KeyN KeyboardKey = 110 // 0x6E ('n')
-	KeyO KeyboardKey = 111 // 0x6F ('o')
-	KeyP KeyboardKey = 112 // 0x70 ('p')
-	KeyQ KeyboardKey = 113 // 0x71 ('q')
-	KeyR KeyboardKey = 114 // 0x72 ('r')
-	KeyS KeyboardKey = 115 // 0x73 ('s')
-	KeyT KeyboardKey = 116 // 0x74 ('t')
-	KeyU KeyboardKey = 117 // 0x75 ('u')
-	KeyV KeyboardKey = 118 // 0x76 ('v')
-	KeyW KeyboardKey = 119 // 0x77 ('w')
-	KeyX KeyboardKey = 120 // 0x78 ('x')
-	KeyY KeyboardKey = 121 // 0x79 ('y')
-	KeyZ KeyboardKey = 122 // 0x7A ('z')
+	KeyA Key = 97  // 0x61 ('a')
+	KeyB Key = 98  // 0x62 ('b')
+	KeyC Key = 99  // 0x63 ('c')
+	KeyD Key = 100 // 0x64 ('d')
+	KeyE Key = 101 // 0x65 ('e')
+	KeyF Key = 102 // 0x66 ('f')
+	KeyG Key = 103 // 0x67 ('g')
+	KeyH Key = 104 // 0x68 ('h')
+	KeyI Key = 105 // 0x69 ('i')
+	KeyJ Key = 106 // 0x6A ('j')
+	KeyK Key = 107 // 0x6B ('k')
+	KeyL Key = 108 // 0x6C ('l')
+	KeyM Key = 109 // 0x6D ('m')
+	KeyN Key = 110 // 0x6E ('n')
+	KeyO Key = 111 // 0x6F ('o')
+	KeyP Key = 112 // 0x70 ('p')
+	KeyQ Key = 113 // 0x71 ('q')
+	KeyR Key = 114 // 0x72 ('r')
+	KeyS Key = 115 // 0x73 ('s')
+	KeyT Key = 116 // 0x74 ('t')
+	KeyU Key = 117 // 0x75 ('u')
+	KeyV Key = 118 // 0x76 ('v')
+	KeyW Key = 119 // 0x77 ('w')
+	KeyX Key = 120 // 0x78 ('x')
+	KeyY Key = 121 // 0x79 ('y')
+	KeyZ Key = 122 // 0x7A ('z')
 )
 
 // arrows block
 const (
-	KeyRight KeyboardKey = 1073741903 // 0x4000004F
-	KeyLeft  KeyboardKey = 1073741904 // 0x40000050
-	KeyDown  KeyboardKey = 1073741905 // 0x40000051
-	KeyUp    KeyboardKey = 1073741906 // 0x40000052
+	KeyRight Key = 1073741903 // 0x4000004F
+	KeyLeft  Key = 1073741904 // 0x40000050
+	KeyDown  Key = 1073741905 // 0x40000051
+	KeyUp    Key = 1073741906 // 0x40000052
 )
 
 // special keys block
 const (
-	KeyTilda     KeyboardKey = 96         // 0x60 ('`')
-	KeyBackspace KeyboardKey = 8          // 0x08 ('\b')
-	KeyTab       KeyboardKey = 9          // 0x09 ('\t')
-	KeyCapslock  KeyboardKey = 1073741881 // 0x40000039
-	KeyReturn    KeyboardKey = 13         // 0x0D ('\r')
-	KeyEscape    KeyboardKey = 27         // 0x1B ('\033')
-	KeySpace     KeyboardKey = 32         // 0x20 (' ')
-	KeyLCtrl     KeyboardKey = 1073742048 // 0x400000E0
-	KeyRCtrl     KeyboardKey = 1073742052 // 0x400000E4
-	KeyLShift    KeyboardKey = 1073742049 // 0x400000E1
-	KeyRShift    KeyboardKey = 1073742053 // 0x400000E5
-	KeyLAlt      KeyboardKey = 1073742050 // 0x400000E2
-	KeyRAlt      KeyboardKey = 1073742054 // 0x400000E6
+	KeyTilda     Key = 96         // 0x60 ('`')
+	KeyBackspace Key = 8          // 0x08 ('\b')
+	KeyTab       Key = 9          // 0x09 ('\t')
+	KeyCapslock  Key = 1073741881 // 0x40000039
+	KeyReturn    Key = 13         // 0x0D ('\r')
+	KeyEscape    Key = 27         // 0x1B ('\033')
+	KeySpace     Key = 32         // 0x20 (' ')
+	KeyLCtrl     Key = 1073742048 // 0x400000E0
+	KeyRCtrl     Key = 1073742052 // 0x400000E4
+	KeyLShift    Key = 1073742049 // 0x400000E1
+	KeyRShift    Key = 1073742053 // 0x400000E5
+	KeyLAlt      Key = 1073742050 // 0x400000E2
+	KeyRAlt      Key = 1073742054 // 0x400000E6
 )
 
 // additional keys
 const (
-	KeyComma        KeyboardKey = 44  // 0x2C (',')
-	KeyPeriod       KeyboardKey = 46  // 0x2E ('.')
-	KeySlash        KeyboardKey = 47  // 0x2F ('/')
-	KeySemicolon    KeyboardKey = 59  // 0x3B (';')
-	KeyQuote        KeyboardKey = 39  // 0x27 ('\'')
-	KeyLeftbracket  KeyboardKey = 91  // 0x5B ('[')
-	KeyRightbracket KeyboardKey = 93  // 0x5D (']')
-	KeyBackslash    KeyboardKey = 92  // 0x5C ('\\')
-	KeyDelete       KeyboardKey = 127 // 0x7F ('\177')
+	KeyComma        Key = 44  // 0x2C (',')
+	KeyPeriod       Key = 46  // 0x2E ('.')
+	KeySlash        Key = 47  // 0x2F ('/')
+	KeySemicolon    Key = 59  // 0x3B (';')
+	KeyQuote        Key = 39  // 0x27 ('\'')
+	KeyLeftbracket  Key = 91  // 0x5B ('[')
+	KeyRightbracket Key = 93  // 0x5D (']')
+	KeyBackslash    Key = 92  // 0x5C ('\\')
+	KeyDelete       Key = 127 // 0x7F ('\177')
 )
 
 // -------------------------------------------------------------------

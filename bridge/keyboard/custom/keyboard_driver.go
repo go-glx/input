@@ -1,7 +1,7 @@
 package custom
 
 import (
-	"github.com/go-glx/input/exp/input"
+	"github.com/go-glx/input/system/input/keyboard"
 )
 
 type State uint8
@@ -17,17 +17,17 @@ type KeyboardDriver struct {
 	parentOnEnabled  func()
 	parentOnDisabled func()
 	enabled          bool
-	keysState        map[input.KeyboardKey]State
+	keysState        map[keyboard.Key]State
 }
 
 func NewKeyboardDriver(enabled bool) *KeyboardDriver {
 	return &KeyboardDriver{
 		enabled:   enabled,
-		keysState: make(map[input.KeyboardKey]State),
+		keysState: make(map[keyboard.Key]State),
 	}
 }
 
-func (kb *KeyboardDriver) SetState(key input.KeyboardKey, state State) {
+func (kb *KeyboardDriver) SetState(key keyboard.Key, state State) {
 	switch state {
 	case StateUp:
 		delete(kb.keysState, key)
@@ -71,7 +71,7 @@ func (kb *KeyboardDriver) OnDisabled(fn func()) {
 	kb.parentOnDisabled = fn
 }
 
-func (kb *KeyboardDriver) IsJustPressed(key input.KeyboardKey) bool {
+func (kb *KeyboardDriver) IsJustPressed(key keyboard.Key) bool {
 	if state, exist := kb.keysState[key]; exist {
 		return state == StateJustPressed
 	}
@@ -79,7 +79,7 @@ func (kb *KeyboardDriver) IsJustPressed(key input.KeyboardKey) bool {
 	return false
 }
 
-func (kb *KeyboardDriver) IsJustReleased(key input.KeyboardKey) bool {
+func (kb *KeyboardDriver) IsJustReleased(key keyboard.Key) bool {
 	if state, exist := kb.keysState[key]; exist {
 		return state == StateReleased
 	}
@@ -87,7 +87,7 @@ func (kb *KeyboardDriver) IsJustReleased(key input.KeyboardKey) bool {
 	return false
 }
 
-func (kb *KeyboardDriver) IsDown(key input.KeyboardKey) bool {
+func (kb *KeyboardDriver) IsDown(key keyboard.Key) bool {
 	if state, exist := kb.keysState[key]; exist {
 		return state == StateDown
 	}

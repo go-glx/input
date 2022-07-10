@@ -3,76 +3,73 @@ package system
 import (
 	"testing"
 
-	"github.com/go-glx/input/system/binding"
+	"github.com/stretchr/testify/assert"
+
+	"github.com/go-glx/input/bridge/keyboard/custom"
+	"github.com/go-glx/input/system/controller"
 	"github.com/go-glx/input/system/data"
 	"github.com/go-glx/input/system/device"
+	"github.com/go-glx/input/system/input/keyboard"
+	"github.com/go-glx/input/system/player"
 )
 
-type testActionIdJump struct{}
-type testActionIdWalking struct{}
-type testActionIdSelectMenu struct{}
+const (
+	testActionMovement     = "movement"
+	testActionMovementWalk = testActionMovement + "." + "walk"
+	testActionMovementJump = testActionMovement + "." + "jump"
 
-func TestNewSystem(t *testing.T) {
-	// -- Devices
-	// both keyboards can reference ONE physical keyboard
-	keyboard1 := device.NewDevice(device.KindKeyboard, 1, "Keyboard 1")
-	keyboard2 := device.NewDevice(device.KindKeyboard, 2, "Keyboard 2")
+	testActionMenu       = "menu"
+	testActionMenuSelect = testActionMenu + "." + "select"
+)
 
-	// both gamepad can reference DIFFERENT physical gamepads
-	gamepad1 := device.NewDevice(device.KindGamepad, 1, "Gamepad 1")
-	gamepad2 := device.NewDevice(device.KindGamepad, 2, "Gamepad 2")
+func TestAssemble(t *testing.T) {
+	// -- drivers
+	testKeyboardDriver := custom.NewKeyboardDriver(true)
 
-	// -- Players
-	playerOne := NewPlayer(Player1, true)
-	playerOne.AttachDevice(keyboard1)
-	playerOne.AttachDevice(gamepad1)
+	// -- physical devices
+	physicalKeyboard := keyboard.NewKeyboardDevice(testKeyboardDriver)
 
-	playerTwo := NewPlayer(Player2, true)
-	playerTwo.AttachDevice(keyboard2)
-	playerTwo.AttachDevice(gamepad2)
+	// -- devices
+	virtualKeyboardLeft := device.NewDevice("Keyboard Left", physicalKeyboard)
+	virtualKeyboardRight := device.NewDevice("Keyboard Right", physicalKeyboard)
 
-	players := [4]*Player{
-		playerOne,
-		playerTwo,
-		NewPlayer(Player3, false),
-		NewPlayer(Player4, false),
-	}
-
-	// -- Action maps
-
-	actionMapMovement := NewActionMap("movement")
-
-	BindTo[data.Flash](actionMapMovement, testActionIdJump{}, []*binding.Binding{
-		binding.NewBinding(keyboard1, "LCtrl"),
-		binding.NewBinding(keyboard2, "RCtrl"),
-		binding.NewBinding(gamepad1, "X"),
-		binding.NewBinding(gamepad2, "X"),
+	// -- controllers
+	controllerLeft := controller.NewController([]*device.Device{
+		virtualKeyboardLeft,
 	})
-	BindTo[data.Vec2](actionMapMovement, testActionIdWalking{}, []*binding.Binding{
-		binding.NewBinding(keyboard1, "WASD"),
-		binding.NewBinding(keyboard2, "ARROWS"),
-		binding.NewBinding(gamepad1, "RightStick"),
-		binding.NewBinding(gamepad2, "RightStick"),
+	controllerRight := controller.NewController([]*device.Device{
+		virtualKeyboardRight,
 	})
 
-	actionMapMenu := NewActionMap("menu")
+	// -- players
+	player1 := player.NewPlayer()
+	player1.AttachController(controllerLeft)
 
-	BindTo[data.Vec1](actionMapMovement, testActionIdSelectMenu{}, []*binding.Binding{
-		binding.NewBinding(keyboard1, "WS"),
-		binding.NewBinding(keyboard2, "Up,Down"),
-		binding.NewBinding(gamepad1, "RightStickUp"),
-		binding.NewBinding(gamepad2, "RightStickDown"),
-	})
+	player2 := player.NewPlayer()
+	player2.AttachController(controllerRight)
 
-	actionMaps := []*ActionMap{
-		actionMapMovement,
-		actionMapMenu,
-	}
+	// -- system
+	system := NewSystem()
 
-	// -- System
+	// -- bindings
+	DefineActionOf[data.Vec2](system, testActionMovementWalk, controllerLeft,
+		system.FromVec2Keyboard(keyboard.KeyW, keyboard.KeyS, keyboard.KeyA, keyboard.KeyD), // WASD
+	)
+	DefineActionOf[data.Vec2](system, testActionMovementWalk, controllerRight,
+		system.FromVec2Keyboard(keyboard.KeyI, keyboard.KeyK, keyboard.KeyJ, keyboard.KeyL), // IJKL
+	)
 
-	system := NewSystem(players, actionMaps)
+	// -- emulate test
+	testKeyboardDriver.SetState(keyboard.KeyS, custom.StateDown) // pl1
+	testKeyboardDriver.SetState(keyboard.KeyI, custom.StateDown) // pl2
+	testKeyboardDriver.SetState(keyboard.KeyJ, custom.StateDown) // pl2
 
-	// -- Tests
-	_ = system
+	// -- test
+	system.SwitchPlayer(player1)
+	walkVecPlr1 := Resolve[data.Vec2](system, testActionMovementWalk)
+	system.SwitchPlayer(player2)
+	walkVecPlr2 := Resolve[data.Vec2](system, testActionMovementWalk)
+
+	assert.Equal(t, data.Vec2{Handled: true, X: 0, Y: 1}, walkVecPlr1)
+	assert.Equal(t, data.Vec2{Handled: true, X: -1, Y: -1}, walkVecPlr2)
 }
