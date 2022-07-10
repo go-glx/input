@@ -70,9 +70,9 @@ func TestAssemble(t *testing.T) {
 
 	// -- test
 	system.SwitchPlayer(player1)
-	walkVecPlr1 := Resolve[data.Vec2](system, testActionMovementWalk)
+	walkVecPlr1 := Resolve[data.Vec2](movementWalk)
 	system.SwitchPlayer(player2)
-	walkVecPlr2 := Resolve[data.Vec2](system, testActionMovementWalk)
+	walkVecPlr2 := Resolve[data.Vec2](movementWalk)
 
 	assert.Equal(t, data.Vec2{Handled: true, X: 0, Y: 1}, walkVecPlr1)
 	assert.Equal(t, data.Vec2{Handled: true, X: -1, Y: -1}, walkVecPlr2)
