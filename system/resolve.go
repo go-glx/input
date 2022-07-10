@@ -3,24 +3,33 @@ package system
 import (
 	"fmt"
 
+	"github.com/go-glx/input/system/action"
 	"github.com/go-glx/input/system/data"
 )
 
 // Resolve will fetch actual input values for provided action
 // if you have more than 1 player, you need switch it with System.SwitchPlayer
-func Resolve[T data.Type](action *Action) T {
-	if !action.system.isReady {
+func Resolve[T data.Type](sys *System, action *action.Action) T {
+	if !sys.isReady {
 		panic(fmt.Errorf("input system is not initialized yet. " +
 			"You must call SwitchPlayer at least once for one player configuration. " +
 			"If you have multiplyer hot-seat, SwitchPlayer should be called every frame"))
 	}
 
-	ctls, ok := action.system.binders[action.ID]
+	// player not listen for this action currently
+	// because another action map is active
+	if action.Parent().ID() != sys.currentActionMapID {
+		return *new(T)
+	}
+
+	// look for available controllers for this action
+	ctls, ok := sys.binders[action.ID()]
 	if !ok {
 		return *new(T)
 	}
 
-	binders, ok := ctls[action.system.currentControllerID]
+	// look for binders (low-level input provider) for this action
+	binders, ok := ctls[sys.currentControllerID]
 	if !ok {
 		return *new(T)
 	}
@@ -50,8 +59,8 @@ func Resolve[T data.Type](action *Action) T {
 		var TType T
 		panic(fmt.Errorf("resolved input value for action '%s.%s' not implement '%T' type. "+
 			"Actual type-value: %T=`%v`",
-			action.mapID,
-			action.ID,
+			action.Parent().ID(),
+			action.ID(),
 			TType,
 			resolvedValue,
 			resolvedValue,

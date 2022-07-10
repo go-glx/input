@@ -32,8 +32,15 @@ func (s *System) FromStreamKeyboardKey(key keyboard.Key) binding.F[data.Stream] 
 // --               VEC1               --
 // --------------------------------------
 
-func (s *System) FromVec1(pos, neg binding.F[data.Stream]) binding.F[data.Vec1] {
-	return binding.Vec1(pos, neg)
+func (s *System) FromVec1(neg, pos binding.F[data.Stream]) binding.F[data.Vec1] {
+	return binding.Vec1(neg, pos)
+}
+
+func (s *System) FromVec1Keyboard(neg, pos keyboard.Key) binding.F[data.Vec1] {
+	return s.FromVec1(
+		s.FromStreamKeyboardKey(neg),
+		s.FromStreamKeyboardKey(pos),
+	)
 }
 
 // --------------------------------------
@@ -47,12 +54,12 @@ func (s *System) FromVec2(y, x binding.F[data.Vec1]) binding.F[data.Vec2] {
 func (s *System) FromVec2Keyboard(top, down, left, right keyboard.Key) binding.F[data.Vec2] {
 	return s.FromVec2(
 		s.FromVec1(
-			s.FromStreamKeyboardKey(down),
 			s.FromStreamKeyboardKey(top),
+			s.FromStreamKeyboardKey(down),
 		),
 		s.FromVec1(
-			s.FromStreamKeyboardKey(right),
 			s.FromStreamKeyboardKey(left),
+			s.FromStreamKeyboardKey(right),
 		),
 	)
 }

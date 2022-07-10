@@ -9,8 +9,8 @@ __NOT READY FOR REAL USE YET__
 ## todo
 
 - [x] basic working system
+- [x] action maps
 - [ ] unit tests
-- [ ] action maps
 - [ ] gamepads
 - [ ] mouse
 - [ ] bridges for popular frameworks (SDL, raylib, etc..)

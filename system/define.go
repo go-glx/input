@@ -1,35 +1,37 @@
 package system
 
 import (
+	"github.com/go-glx/input/system/action"
 	"github.com/go-glx/input/system/controller"
 	"github.com/go-glx/input/system/data"
 	"github.com/go-glx/input/system/internal/binding"
 )
 
 func BindAs[T data.Type](
+	sys *System,
 	ctl *controller.Controller,
-	action *Action,
+	action *action.Action,
 	binders ...binding.F[T],
 ) {
 	for _, binder := range binders {
-		bind(action.system, action.ID, ctl, binder)
+		bind(sys, action.ID(), ctl, binder)
 	}
 }
 
-func bind[T data.Type](s *System, action actionID, ctl *controller.Controller, binder binding.F[T]) {
+func bind[T data.Type](s *System, actionID action.ID, ctl *controller.Controller, binder binding.F[T]) {
 	if s.binders == nil {
-		s.binders = make(map[actionID]map[controller.ID][]binding.F[any])
+		s.binders = make(map[action.ID]map[controller.ID][]binding.F[any])
 	}
 
-	if _, exist := s.binders[action]; !exist {
-		s.binders[action] = make(map[controller.ID][]binding.F[any])
+	if _, exist := s.binders[actionID]; !exist {
+		s.binders[actionID] = make(map[controller.ID][]binding.F[any])
 	}
 
-	if _, exist := s.binders[action][ctl.ID()]; !exist {
-		s.binders[action][ctl.ID()] = make([]binding.F[any], 0)
+	if _, exist := s.binders[actionID][ctl.ID()]; !exist {
+		s.binders[actionID][ctl.ID()] = make([]binding.F[any], 0)
 	}
 
-	s.binders[action][ctl.ID()] = append(s.binders[action][ctl.ID()], func() any {
+	s.binders[actionID][ctl.ID()] = append(s.binders[actionID][ctl.ID()], func() any {
 		return binder()
 	})
 }

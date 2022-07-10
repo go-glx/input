@@ -3,6 +3,7 @@ package system
 import (
 	"fmt"
 
+	"github.com/go-glx/input/system/action"
 	"github.com/go-glx/input/system/controller"
 	"github.com/go-glx/input/system/device"
 	"github.com/go-glx/input/system/input/keyboard"
@@ -13,24 +14,19 @@ import (
 type System struct {
 	isReady bool
 
+	currentActionMapID  action.MapID
 	currentControllerID controller.ID
 	currentKeyboard     *keyboard.PhysicalDevice
 	// currentGamepad *VirtualGamepad // todo
 	// currentMouse *VirtualMouse  // todo
 
-	binders map[actionID]map[controller.ID][]binding.F[any]
+	binders map[action.ID]map[controller.ID][]binding.F[any]
 }
 
 func NewSystem() *System {
 	return &System{
 		isReady: false,
 	}
-}
-
-// NewAction will create Action that can be bind to system
-// later wia BindAs function
-func (s *System) NewAction(mapID string, id string) *Action {
-	return newAction(s, actionID(id), actionMapID(mapID))
 }
 
 // SwitchPlayer will set current player for who lib should
@@ -63,15 +59,27 @@ func (s *System) SwitchPlayer(plr *player.Player) {
 		return
 	}
 
+	// check if player listen events in some actions map
+	aMap := plr.CurrentActionMap()
+	if aMap == nil {
+		return
+	}
+
 	// set new player controller
+	s.setCurrentActionMap(aMap)
 	s.setCurrentController(ctl)
 }
 
 func (s *System) reset() {
+	s.currentActionMapID = ""
 	s.currentControllerID = ""
 	s.currentKeyboard = nil
 	// todo: gamepad
 	// todo: mouse
+}
+
+func (s *System) setCurrentActionMap(aMap *action.Map) {
+	s.currentActionMapID = aMap.ID()
 }
 
 func (s *System) setCurrentController(ctl *controller.Controller) {

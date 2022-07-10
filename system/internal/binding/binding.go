@@ -6,9 +6,9 @@ type (
 	F[T data.Type] func() T
 )
 
-func Vec1(pos, neg F[data.Stream]) F[data.Vec1] {
+func Vec1(neg, pos F[data.Stream]) F[data.Vec1] {
 	return func() data.Vec1 {
-		v, handled := normalizeStream(pos, neg)
+		v, handled := normalizeStream(neg, pos)
 
 		return data.Vec1{
 			V:       v,
@@ -40,8 +40,8 @@ func Vec3(x, y, z F[data.Vec1]) F[data.Vec3] {
 	}
 }
 
-func normalizeStream(pos, neg F[data.Stream]) (float32, bool) {
-	posV, negV := pos(), neg()
+func normalizeStream(neg, pos F[data.Stream]) (float32, bool) {
+	negV, posV := neg(), pos()
 
 	v := float32(0.0)
 
@@ -52,5 +52,5 @@ func normalizeStream(pos, neg F[data.Stream]) (float32, bool) {
 		v += 1
 	}
 
-	return v, posV.Handled && negV.Handled
+	return v, negV.Handled && posV.Handled
 }

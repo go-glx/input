@@ -3,14 +3,16 @@ package player
 import (
 	"github.com/google/uuid"
 
+	"github.com/go-glx/input/system/action"
 	"github.com/go-glx/input/system/controller"
 )
 
 type ID string
 
 type Player struct {
-	id  ID
-	ctl *controller.Controller // can be nil
+	id        ID
+	actionMap *action.Map
+	ctl       *controller.Controller // can be nil
 }
 
 func NewPlayer() *Player {
@@ -22,6 +24,14 @@ func NewPlayer() *Player {
 
 func (p *Player) ID() ID {
 	return p.id
+}
+
+func (p *Player) SwitchActionMap(aMap *action.Map) {
+	p.actionMap = aMap
+}
+
+func (p *Player) CurrentActionMap() *action.Map {
+	return p.actionMap
 }
 
 func (p *Player) Controller() *controller.Controller {
