@@ -1,2 +1,4 @@
 github.com/gen2brain/raylib-go/raylib v0.0.0-20220702153720-2ba84634ed1e h1:e/GRIyVh+q0SSASTNZ7Ns/mfG4TCb+cvVCFow2es42M=
 github.com/gen2brain/raylib-go/raylib v0.0.0-20220702153720-2ba84634ed1e/go.mod h1:+NbsqGlEQqGqrsgJFF5Yj2dkvn0ML2SQb8RqM2hJsPU=
+github.com/go-glx/input v0.1.1 h1:0T0nG9y8sMDRfjCDSU3M9RNGzaJqY0rG4AI0ztUv9fo=
+github.com/go-glx/input v0.1.1/go.mod h1:69m3fyJDMkaCcH2lBFrZ9GqKzvg59ma2w7VH8QFy3C4=
