@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/go-glx/input/bridge/keyboard/custom"
+	"github.com/go-glx/input/custom"
 	"github.com/go-glx/input/system/action"
 	"github.com/go-glx/input/system/controller"
 	"github.com/go-glx/input/system/data"
