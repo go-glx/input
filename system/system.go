@@ -29,11 +29,12 @@ func NewSystem() *System {
 	}
 }
 
-// SwitchPlayer will set current player for who lib should
-// resolve provided input actions wia Resolve.
+// SwitchPlayer will set for what player input system should resolve
+// requested action. If you game contain only one player
+// you can call this function only once in game initialization
 //
-// If you have more than one player, you MUST call this
-// function every frame, right before Resolve
+// If game have more that once player, this function should be called
+// every frame, right before Input.Resolve
 //
 // example:
 // 	SwitchPlayer(1)
