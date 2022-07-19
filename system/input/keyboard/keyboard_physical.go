@@ -3,6 +3,7 @@ package keyboard
 import "github.com/go-glx/input/system/device"
 
 type Driver interface {
+	Tick()
 	IsEnabled() bool
 	OnEnabled(func())
 	OnDisabled(func())
@@ -37,6 +38,10 @@ func (v *PhysicalDevice) OnEnabled(fn func()) {
 
 func (v *PhysicalDevice) OnDisabled(fn func()) {
 	v.driver.OnDisabled(fn)
+}
+
+func (v *PhysicalDevice) Tick() {
+	v.driver.Tick()
 }
 
 func (v *PhysicalDevice) Driver() Driver {

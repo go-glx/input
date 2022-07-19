@@ -13,6 +13,7 @@ import (
 
 type System struct {
 	isReady bool
+	devices []*device.Device
 
 	currentActionMapID  action.MapID
 	currentControllerID controller.ID
@@ -23,9 +24,21 @@ type System struct {
 	binders map[action.ID]map[controller.ID][]binding.F[any]
 }
 
-func NewSystem() *System {
+func NewSystem(devices []*device.Device) *System {
 	return &System{
 		isReady: false,
+		devices: devices,
+	}
+}
+
+// Tick MUST be executed only from engine side
+// one time per game loop cycle or frame
+//
+// This function will call Device.Tick for all registered devices
+// and device drivers can use this for additional reset processing
+func (s *System) Tick() {
+	for _, deviceInst := range s.devices {
+		deviceInst.Physical().Tick()
 	}
 }
 

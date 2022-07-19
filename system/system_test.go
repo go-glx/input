@@ -61,7 +61,10 @@ func TestIntegrationFull(t *testing.T) {
 	player2.SwitchActionMap(movement)
 
 	// -- system
-	system := NewSystem()
+	system := NewSystem([]*device.Device{
+		virtualKeyboardLeft,
+		virtualKeyboardRight,
+	})
 
 	// -- bindings
 	BindAs[data.Vec2](system, controllerLeft, movementWalk,

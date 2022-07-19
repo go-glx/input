@@ -13,6 +13,7 @@ const (
 type PhysicalDevice interface {
 	Name() Name
 	Kind() Kind
+	Tick()
 	IsEnabled() bool
 	OnEnabled(func())
 	OnDisabled(func())

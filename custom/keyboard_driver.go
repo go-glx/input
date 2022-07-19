@@ -37,6 +37,8 @@ func (kb *KeyboardDriver) SetState(key keyboard.Key, state State) {
 	}
 }
 
+func (kb *KeyboardDriver) Tick() {}
+
 func (kb *KeyboardDriver) Enable() {
 	if kb.enabled == true {
 		return

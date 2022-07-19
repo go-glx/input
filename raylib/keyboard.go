@@ -7,6 +7,7 @@ import (
 )
 
 type KeyboardDriver struct {
+	// todo: events queue and state like in glfw
 }
 
 func NewKeyboardDriver() *KeyboardDriver {
@@ -17,6 +18,7 @@ func (k *KeyboardDriver) IsEnabled() bool {
 	return true
 }
 
+func (k *KeyboardDriver) Tick()               {}
 func (k *KeyboardDriver) OnEnabled(_ func())  {}
 func (k *KeyboardDriver) OnDisabled(_ func()) {}
 
