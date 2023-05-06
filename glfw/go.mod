@@ -1,6 +1,6 @@
 module github.com/go-glx/input/glfw
 
-go 1.18
+go 1.20
 
 require github.com/go-glx/input v0.1.1
 
